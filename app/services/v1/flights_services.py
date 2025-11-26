@@ -23,7 +23,8 @@ def search(**kwargs):
     
     filter = {k: v for k, v in kwargs.items() if v is not None}
     print (filter)
-    results = list(db.collection.find(filter, {'_id': 0}))
+    raw = db.collection.find(filter, {'_id': 0})
+    results = list(raw)
     data = {"flights":results}
     if results:
         return Response(content=data, status_code=200)
