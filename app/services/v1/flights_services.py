@@ -26,5 +26,5 @@ def search(**kwargs):
     raw = db.collection.find(filter, {'_id': 0})
     results = list(raw)
     print (results)
-    data = {"flights":results}
+    data = {"flights":list(results)}
     return data
