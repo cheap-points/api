@@ -1,3 +1,4 @@
+from fastapi import Response
 from mongo_handler import ConnectionHandler
 import os, json
 from dotenv import load_dotenv
@@ -22,6 +23,10 @@ def search(**kwargs):
     
     filter = {k: v for k, v in kwargs.items() if v is not None}
     print (filter)
-    results = db.collection.find(filter, {'_id': 0})
-    data = {"flights":list(results)}
-    return (data)
+    results = list(db.collection.find(filter, {'_id': 0}))
+    data = {"flights":results}
+    if results:
+        return Response(content=data, status_code=200)
+    if not results:
+        return Response(content=data, status_code=404)
+    
